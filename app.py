@@ -438,7 +438,7 @@ def section_card(title, border_color, items):
     bg = _hex_to_rgba(border_color, 0.55)
     bd = _hex_to_rgba(border_color, 0.30)
     html = f'<div style="background:linear-gradient(135deg,{bg},rgba(26,26,46,0.95));border:1px solid {bd};border-radius:12px;padding:16px;margin-bottom:16px;">'
-    html += f'<div style="font-size:14px;font-weight:700;color:#ffffff;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.10);">{title}</div>'
+    html += f'<div style="font-size:18px;font-weight:700;color:#ffffff;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.10);">{title}</div>'
     html += '<div>'
     for idx, item in enumerate(items):
         label = item[0]
@@ -451,13 +451,13 @@ def section_card(title, border_color, items):
         html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;">'
         if tooltip:
             label_html = f'{label} <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.15);font-size:9px;margin-left:4px;cursor:help;" title="{tooltip}">?</span>'
-            html += f'<span style="font-size:13px;color:rgba(255,255,255,0.85);white-space:nowrap;">{label_html}</span>'
+            html += f'<span style="font-size:16px;color:rgba(255,255,255,0.85);white-space:nowrap;">{label_html}</span>'
         else:
-            html += f'<span style="font-size:13px;color:rgba(255,255,255,0.85);white-space:nowrap;">{label}</span>'
+            html += f'<span style="font-size:16px;color:rgba(255,255,255,0.85);white-space:nowrap;">{label}</span>'
         html += '<div style="text-align:right;">'
-        html += f'<div style="font-size:15px;font-weight:700;color:#ffffff;white-space:nowrap;">{value}</div>'
+        html += f'<div style="font-size:17px;font-weight:700;color:#ffffff;white-space:nowrap;">{value}</div>'
         if sub:
-            html += f'<div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px;white-space:nowrap;">{sub}</div>'
+            html += f'<div style="font-size:14px;color:rgba(255,255,255,0.65);margin-top:2px;white-space:nowrap;">{sub}</div>'
         html += '</div></div></div>'
     html += '</div></div>'
     st.markdown(html, unsafe_allow_html=True)
