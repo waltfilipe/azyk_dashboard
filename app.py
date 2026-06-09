@@ -138,134 +138,8 @@ def is_in_funnel_zone(x, y):
     """Check if a defensive action is in the penalty area + 15m extended zone."""
     return x <= FUNNEL_X_EXTEND and PENALTY_AREA_Y_MIN <= y <= PENALTY_AREA_Y_MAX
 
-# BASE PASSES
+# BASE PASSES — only the 3 new matches
 BASE_MATCHES_DATA = {
-    "Connecticut United (03-27)": [
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-    ],
-    "Nashville SC (03-28)": [
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-    ],
-    "Seongnam FC (03-29)": [
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-    ],
-    "NY Red Bulls (03-31)": [
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS WON", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-        ("PASS LOST", 0.0, 0.0, 0.0, 0.0, None),
-    ],
     "Real Salt Lake (05-10)": [
         ("PASS WON", 115.52, 72.91, 109.54, 73.08, None),
         ("PASS WON", 108.21, 53.46, 108.04, 39.67, None),
@@ -343,226 +217,9 @@ BASE_MATCHES_DATA = {
     ],
 }
 
-# DEFENSIVE ACTIONS
+# DEFENSIVE ACTIONS — only the 3 new matches, offensive duels excluded
 DEFENSIVE_MATCHES_DATA = {
-    "Michigan Wolves (02-20)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Philadelphia Union (02-27)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Columbus Crew (03-06)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Minnesota United (03-13)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Vardar Soccer (03-14)": [
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Colorado Rapids (03-20)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Connecticut United (03-27)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Nashville SC (03-28)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Seongnam FC (03-29)": [
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "NY Red Bulls (03-31)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Minnesota United (04-10)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Sporting Kansas City (04-17)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Cedar Stars (04-22)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "South Florida (04-23)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Real Salt Lake (04-26)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Real Futbol (05-23)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "San Jose (05-24)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-        ("INTERCEPTION", 0.0, 0.0),
-    ],
-    "Houston Dynamo (05-26)": [
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_WON", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-        ("DUEL_LOST", 0.0, 0.0),
-    ],
     "Real Salt Lake (05-10)": [
-        ("INTERCEPTION", 27.75, 56.96),
-        ("INTERCEPTION", 24.26, 59.95),
-        ("INTERCEPTION", 10.96, 51.64),
         ("DUEL_WON", 109.70, 68.92),
         ("DUEL_WON", 68.64, 55.79),
         ("DUEL_WON", 19.44, 78.40),
@@ -570,7 +227,9 @@ DEFENSIVE_MATCHES_DATA = {
         ("DUEL_LOST", 2.65, 73.75),
         ("DUEL_LOST", 17.28, 64.94),
         ("DUEL_LOST", 29.25, 58.62),
-        ("DUEL_LOST", 49.86, 67.10),
+        ("INTERCEPTION", 27.75, 56.96),
+        ("INTERCEPTION", 24.26, 59.95),
+        ("INTERCEPTION", 10.96, 51.64),
     ],
     "Vancouver Whitecaps (05-15)": [
         ("DUEL_WON", 49.19, 64.77),
@@ -582,8 +241,6 @@ DEFENSIVE_MATCHES_DATA = {
         ("DUEL_WON", 55.35, 70.59),
         ("DUEL_WON", 31.74, 65.77),
         ("DUEL_WON", 21.93, 64.27),
-        ("DUEL_WON", 112.53, 64.77),
-        ("DUEL_WON", 108.21, 54.96),
         ("DUEL_LOST", 24.92, 53.13),
         ("DUEL_LOST", 13.29, 68.09),
         ("DUEL_LOST", 5.48, 72.91),
@@ -595,22 +252,6 @@ DEFENSIVE_MATCHES_DATA = {
 }
 
 # HELPERS
-def apply_date_mapping(name: str) -> str:
-    mapping = {
-        "Connecticut United": "Connecticut United (03-27)",
-        "Nashville SC": "Nashville SC (03-28)",
-        "Seongnam FC": "Seongnam FC (03-29)",
-        "NY Red Bulls": "NY Red Bulls (03-31)",
-        "Real Salt Lake": "Real Salt Lake (04-26)",
-        "Real Futbol": "Real Futbol (05-23)",
-        "San Jose": "San Jose (05-24)",
-        "Houston Dynamo": "Houston Dynamo (05-26)"
-    }
-    for k, v in mapping.items():
-        if k.lower() == name.lower().strip():
-            return v
-    return name
-
 def get_match_minutes(match_name: str) -> float:
     if match_name == "All Matches":
         total = 0.0
@@ -618,19 +259,7 @@ def get_match_minutes(match_name: str) -> float:
             total += get_match_minutes(k)
         return total
     name_lower = match_name.lower()
-    if "connecticut" in name_lower:
-        return 60.0
-    if "nashville" in name_lower:
-        return 60.0
-    if "seongnam" in name_lower:
-        return 32.0
-    if "red bulls" in name_lower:
-        return 60.0
-    if "houston" in name_lower:
-        return 63.0
-    if "vardar" in name_lower:
-        return 65.0
-    if "salt lake" in name_lower and "05-10" in match_name:
+    if "salt lake" in name_lower:
         return 85.0
     if "vancouver" in name_lower:
         return 45.0
@@ -638,63 +267,8 @@ def get_match_minutes(match_name: str) -> float:
         return 82.0
     return 90.0
 
-def read_docx_text(docx_path: Path) -> str:
-    if not DOCX_AVAILABLE:
-        raise RuntimeError("python-docx is not installed.")
-    doc = Document(str(docx_path))
-    return "\n".join(p.text for p in doc.paragraphs if p.text and p.text.strip())
-
-def parse_docx_events(raw_text: str) -> dict:
-    lines = [ln.strip() for ln in raw_text.splitlines() if ln.strip()]
-    matches = {}
-    current_match = None
-    current_state = None
-    re_match = re.compile(r"^Vs\s+(.+)$", re.IGNORECASE)
-    re_success = re.compile(r"^Sucesso$", re.IGNORECASE)
-    re_fail = re.compile(r"^Errado[s]?$", re.IGNORECASE)
-    re_arrow = re.compile(
-        r"^Seta\s+\d+:\s*\(([-+]?\d*\.?\d+),\s*([-+]?\d*\.?\d+)\)\s*->\s*\(([-+]?\d*\.?\d+),\s*([-+]?\d*\.?\d+)\)$",
-        re.IGNORECASE,
-    )
-    for ln in lines:
-        m_match = re_match.match(ln)
-        if m_match:
-            current_match = m_match.group(1).strip()
-            matches.setdefault(current_match, [])
-            current_state = None
-            continue
-        if re_success.match(ln):
-            current_state = "PASS WON"
-            continue
-        if re_fail.match(ln):
-            current_state = "PASS LOST"
-            continue
-        m_arrow = re_arrow.match(ln)
-        if m_arrow and current_match and current_state:
-            x1, y1, x2, y2 = map(float, m_arrow.groups())
-            matches[current_match].append((current_state, x1, y1, x2, y2, None))
-    return {k: v for k, v in matches.items() if len(v) > 0}
-
-def load_docx_matches(docx_filename="Passes - Hudson Cicala.docx") -> dict:
-    p = Path(docx_filename)
-    if not p.exists():
-        return {}
-    txt = read_docx_text(p)
-    return parse_docx_events(txt)
-
 # DATA LOADING
-docx_matches_data = {}
-try:
-    docx_matches_data = load_docx_matches()
-except Exception:
-    pass
-
 combined_matches_data = {}
-for k, v in docx_matches_data.items():
-    mapped_k = apply_date_mapping(k)
-    name = mapped_k if mapped_k not in combined_matches_data else f"DOCX - {mapped_k}"
-    combined_matches_data[name] = v
-
 for k, v in BASE_MATCHES_DATA.items():
     combined_matches_data[k] = v
 
@@ -702,7 +276,7 @@ if len(combined_matches_data) == 0:
     st.error("Could not load data.")
     st.stop()
 
-# BUILD DATAFRAMES & REORDER MATCHES
+# BUILD DATAFRAMES
 dfs_by_match = {}
 for match_name, events in combined_matches_data.items():
     dfm = pd.DataFrame(events, columns=["type", "x_start", "y_start", "x_end", "y_end", "video"])
@@ -728,15 +302,6 @@ for match_name, events in combined_matches_data.items():
     dfm["delta_xt_adj"] = np.where(dfm["is_won"], dfm["delta_xt"] * (1.0 + dfm["dist_bonus"]), 0.0)
     dfs_by_match[match_name] = dfm
 
-# REORDER LOGIC
-items = list(dfs_by_match.items())
-if len(items) >= 18:
-    part1 = items[:6]
-    part2 = items[14:18]
-    part3 = items[6:14]
-    part4 = items[18:]
-    dfs_by_match = dict(part1 + part2 + part3 + part4)
-
 df_all = pd.concat(dfs_by_match.values(), ignore_index=True)
 
 # DEFENSIVE DATA LOADING
@@ -751,6 +316,10 @@ for match_name, events in DEFENSIVE_MATCHES_DATA.items():
     df_def["is_interception"] = df_def["type"] == "INTERCEPTION"
     df_def["in_funnel"] = df_def.apply(lambda r: is_in_funnel_zone(r["x"], r["y"]), axis=1)
     defensive_dfs_by_match[match_name] = df_def
+
+# Only the 3 match keys for dropdowns
+ACTIVE_PASS_MATCHES = list(dfs_by_match.keys())
+ACTIVE_DEF_MATCHES = list(defensive_dfs_by_match.keys())
 
 # STATS & SCORES
 def compute_stats(df: pd.DataFrame, match_name: str) -> dict:
@@ -1495,7 +1064,7 @@ with tab_dash:
         st.markdown("### Match Filters")
         col_f1, col_f2 = st.columns(2)
         with col_f1:
-            pass_match_options = ["All Matches"] + list(dfs_by_match.keys())
+            pass_match_options = ["All Matches"] + ACTIVE_PASS_MATCHES
             selected_match = st.selectbox("Select Match", options=pass_match_options, index=0, key="pass_match")
         with col_f2:
             pass_filter = st.radio(
@@ -1603,7 +1172,7 @@ with tab_dash:
         st.markdown("### Match Filter")
         col_df1, col_df2 = st.columns(2)
         with col_df1:
-            def_match_options = ["All Matches"] + list(defensive_dfs_by_match.keys())
+            def_match_options = ["All Matches"] + ACTIVE_DEF_MATCHES
             selected_def_match = st.selectbox("Select Match", options=def_match_options, index=0, key="def_match")
         with col_df2:
             def_type_filter = st.radio("Filter Type", ["All", "Duels Only", "Interceptions Only"], horizontal=True, key="def_type_filter")
