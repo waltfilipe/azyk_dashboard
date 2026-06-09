@@ -74,7 +74,7 @@ def _hex_to_rgba(hex_color, alpha=1.0):
 def get_lane(y):
     if y >= LANE_LEFT_MIN:
         return "left"
-    elif y &lt; LANE_RIGHT_MAX:
+    elif y < LANE_RIGHT_MAX:
         return "right"
     return "center"
 
@@ -82,7 +82,7 @@ def distance_to_goal(x, y):
     return np.sqrt((GOAL_X - x) ** 2 + (GOAL_Y - y) ** 2)
 
 def is_progressive_pass(x_start, y_start, x_end, y_end):
-    if x_start &lt; 35:
+    if x_start < 35:
         return False
     start_dist = distance_to_goal(x_start, y_start)
     end_dist = distance_to_goal(x_end, y_end)
@@ -95,7 +95,7 @@ def classify_pass_direction(x_start, y_start, x_end, y_end):
     dy = y_end - y_start
     dist = np.sqrt(dx ** 2 + dy ** 2)
     angle_deg = np.degrees(np.arctan2(abs(dy), dx))
-    if angle_deg &lt;= 45.0:
+    if angle_deg <= 45.0:
         return "forward"
     if angle_deg >= 135.0:
         return "backward"
@@ -137,7 +137,7 @@ def xt_value(x, y):
     return float(XT_GRID[iy, ix])
 
 def is_in_funnel_zone(x, y):
-    return x &lt;= FUNNEL_X_EXTEND and PENALTY_AREA_Y_MIN &lt;= y &lt;= PENALTY_AREA_Y_MAX
+    return x <= FUNNEL_X_EXTEND and PENALTY_AREA_Y_MIN <= y <= PENALTY_AREA_Y_MAX
 
 # BASE PASSES
 BASE_MATCHES_DATA = {
@@ -343,7 +343,7 @@ def compute_stats(df: pd.DataFrame, match_name: str) -> dict:
         lambda r: is_progressive_pass(r["x_start"], r["y_start"], r["x_end"], r["y_end"]), axis=1)).sum())
     progressive_attempted = progressive_total + progressive_unsuccessful
     progressive_accuracy = (progressive_total / progressive_attempted * 100.0) if progressive_attempted else 0.0
-    to_final_third = (df["x_start"] &lt; FINAL_THIRD_LINE_X) & (df["x_end"] >= FINAL_THIRD_LINE_X)
+    to_final_third = (df["x_start"] < FINAL_THIRD_LINE_X) & (df["x_end"] >= FINAL_THIRD_LINE_X)
     to_final_third_total = int(to_final_third.sum())
     to_final_third_success = int((to_final_third & df["is_won"]).sum())
     to_final_third_accuracy = (to_final_third_success / to_final_third_total * 100.0) if to_final_third_total else 0.0
@@ -351,7 +351,7 @@ def compute_stats(df: pd.DataFrame, match_name: str) -> dict:
     long_total = len(long_passes)
     long_success = int(long_passes["is_won"].sum())
     long_acc_pct = (long_success / long_total * 100.0) if long_total > 0 else 0.0
-    dz_mask = df["is_won"] & ((df["x_end"] >= 100.0) | ((df["x_end"] >= 80.0) & (df["x_end"] &lt; 100.0) & (df["y_end"] >= LANE_RIGHT_MAX) & (df["y_end"] &lt; LANE_LEFT_MIN)))
+    dz_mask = df["is_won"] & ((df["x_end"] >= 100.0) | ((df["x_end"] >= 80.0) & (df["x_end"] < 100.0) & (df["y_end"] >= LANE_RIGHT_MAX) & (df["y_end"] < LANE_LEFT_MIN)))
     dz_passes = int(dz_mask.sum())
     fwd = int(df["is_forward"].sum())
     bwd = int(df["is_backward"].sum())
@@ -360,7 +360,7 @@ def compute_stats(df: pd.DataFrame, match_name: str) -> dict:
     pos_pct = (pos_count / total * 100.0) if total > 0 else 0.0
     high_xt = int((df["delta_xt_adj"] > 0.1).sum())
     sum_dxt = float(df.loc[df["is_won"], "delta_xt_adj"].sum())
-    neg_xt = float(df.loc[df["is_won"] & (df["delta_xt_adj"] &lt; 0), "delta_xt_adj"].sum())
+    neg_xt = float(df.loc[df["is_won"] & (df["delta_xt_adj"] < 0), "delta_xt_adj"].sum())
     return {
         "total_passes": total, "successful_passes": successful, "unsuccessful_passes": unsuccessful,
         "accuracy_pct": round(accuracy, 1), "progressive_attempted": progressive_attempted,
@@ -453,7 +453,7 @@ def compute_match_scores(dfs_dict, defensive_dfs_dict=None):
     df_scores['pass_grade'] = df_scores['Grade'].round(1).copy()
     def _norm_def(s, lo, hi):
         clipped = s.clip(lower=lo, upper=hi)
-        if hi &lt;= lo: return pd.Series([70.0] * len(s))
+        if hi <= lo: return pd.Series([70.0] * len(s))
         return 40 + ((clipped - lo) / (hi - lo)) * 60
     df_scores['duels_won_pct_norm'] = _norm_def(df_scores['duels_won_pct'], 0, 100)
     df_scores['int_xt_norm'] = _norm_def(df_scores['int_xt_avg'], 0, 0.30)
@@ -500,7 +500,7 @@ def _safe_pct_diff(a: float, b: float) -> float:
 
 def _arrow_html(val_game: float, val_avg: float) -> str:
     if np.isclose(val_game, val_avg, atol=1e-9): return ""
-    if abs(val_game) &lt; 1 and abs(val_avg) &lt; 1: return ""
+    if abs(val_game) < 1 and abs(val_avg) < 1: return ""
     if val_game > val_avg:
         pct = _safe_pct_diff(val_game, val_avg)
         return f'<span style="color:#34d399;font-size:9px"> +{pct:.0f}%</span>'
@@ -640,7 +640,7 @@ def draw_corridor_heatmap(df):
         arr = np.zeros(6, dtype=int)
         for i in range(6):
             x0_, x1_ = x_bins[i], x_bins[i + 1]
-            arr[i] = int(((df_s["x_end"] >= x0_) & (df_s["x_end"] &lt; x1_) & (df_s["y_end"] >= y0) & (df_s["y_end"] &lt; y1)).sum())
+            arr[i] = int(((df_s["x_end"] >= x0_) & (df_s["x_end"] < x1_) & (df_s["y_end"] >= y0) & (df_s["y_end"] < y1)).sum())
         counts[cname] = arr
     all_vals = np.concatenate([counts[c] for c in counts])
     vmax = max(1, int(all_vals.max()))
@@ -656,7 +656,7 @@ def draw_corridor_heatmap(df):
                                    facecolor=cmap(norm(value)), edgecolor=(1, 1, 1, 0.12),
                                    lw=0.5, alpha=0.95, zorder=2))
             ax.text((x0_ + x1_) / 2, (y0 + y1) / 2, str(value), ha="center", va="center",
-                    color="#000000" if value &lt;= threshold else "#ffffff",
+                    color="#000000" if value <= threshold else "#ffffff",
                     fontsize=9, fontweight="700" if value >= vmax * 0.5 else "600", zorder=4)
     ax.axhline(y=LANE_LEFT_MIN, color="#ffffff", lw=0.5, alpha=0.15, linestyle="--", zorder=3)
     ax.axhline(y=LANE_RIGHT_MAX, color="#ffffff", lw=0.5, alpha=0.15, linestyle="--", zorder=3)
@@ -748,7 +748,7 @@ def draw_defensive_heatmap(df):
     corridors = {"Left": (LANE_LEFT_MIN, FIELD_Y), "Center": (LANE_RIGHT_MAX, LANE_LEFT_MIN), "Right": (0.0, LANE_RIGHT_MAX)}
     corridor_data = {}
     for cname, (y0, y1) in corridors.items():
-        mask = (df["y"] >= y0) & (df["y"] &lt; y1)
+        mask = (df["y"] >= y0) & (df["y"] < y1)
         corr_df = df[mask]
         total = len(corr_df)
         duels_total = int(corr_df["is_duel"].sum())
@@ -771,7 +771,7 @@ def draw_defensive_heatmap(df):
         else:
             label = f"{cname}\nTotal: {value}"
         ax.text(FIELD_X / 2, (y0 + y1) / 2, label, ha="center", va="center",
-                color="#000000" if value &lt;= threshold else "#ffffff", fontsize=9, fontweight="600", zorder=4)
+                color="#000000" if value <= threshold else "#ffffff", fontsize=9, fontweight="600", zorder=4)
     ax.axhline(y=LANE_LEFT_MIN, color="#ffffff", lw=0.5, alpha=0.20, linestyle="--", zorder=3)
     ax.axhline(y=LANE_RIGHT_MAX, color="#ffffff", lw=0.5, alpha=0.20, linestyle="--", zorder=3)
     _attack_arrow(fig)
@@ -801,7 +801,7 @@ st.sidebar.markdown("""
 num_matches = len(dfs_by_match)
 all_match_stats = [compute_stats(dfs_by_match[m], m) for m in dfs_by_match]
 
-# SINGLE TAB — Overall Performance with everything
+# MAIN SECTION
 st.markdown("### Overall Performance Summary")
 
 if num_matches > 0:
@@ -821,17 +821,17 @@ if num_matches > 0:
     st.markdown("### Passes")
     col_s1, col_s2, col_s3 = st.columns(3)
     with col_s1:
-        section_card("📋 Overview", C_BLUE_PASTEL, [
+        section_card("Overview", C_BLUE_PASTEL, [
             ("Passes p90", f"{avg_total_p90:.1f}", f"Total: {total_passes_all}"),
             ("Successful %", f"{avg_acc:.1f}%", f"Total: {total_succ_all}"),
         ])
     with col_s2:
-        section_card("📊 Advanced", C_GREEN_PASTEL, [
+        section_card("Advanced", C_GREEN_PASTEL, [
             ("Progressive p90", f"{avg_prog_p90:.1f}", f"Total: {total_prog_all}"),
             ("Final Third p90", f"{avg_f3_p90:.1f}", f"Total: {total_f3_all}"),
         ])
     with col_s3:
-        section_card("⚡ Impact", C_AMBER_PASTEL, [
+        section_card("Impact", C_AMBER_PASTEL, [
             ("% Positive Impact", f"{avg_pos_pct:.1f}%", f"Total: {total_pos_all}",
              "Passes that generated a positive impact based on where they ended on the field"),
             ("Pass Impact Value", f"{avg_xt_p90:.1f}", f"Total: {total_xt_all:.1f}",
@@ -860,17 +860,17 @@ if num_matches > 0:
         st.markdown("### Defensive Actions")
         col_d1, col_d2, col_d3 = st.columns(3)
         with col_d1:
-            section_card("🛡️ General", C_BLUE_PASTEL, [
+            section_card("General", C_BLUE_PASTEL, [
                 ("Defensive Actions p90", f"{avg_def_actions_p90:.1f}", f"Total: {total_def_actions_all}"),
                 ("Actions in Opp. Field p90", f"{avg_def_att_p90:.1f}", f"Total: {total_def_att_all}"),
             ])
         with col_d2:
-            section_card("⚔️ Duels", C_GREEN_PASTEL, [
+            section_card("Duels", C_GREEN_PASTEL, [
                 ("Defensive Duels p90", f"{avg_duels_p90:.1f}", f"Total: {total_duels_all}"),
                 ("% Duels Won", f"{avg_duels_won_pct:.1f}%", f"({total_duels_won_all}/{total_duels_all})"),
             ])
         with col_d3:
-            section_card("❌ Interceptions", C_AMBER_PASTEL, [
+            section_card("Interceptions", C_AMBER_PASTEL, [
                 ("Interceptions p90", f"{avg_interceptions_p90:.1f}", f"Total: {total_interceptions_all}"),
                 ("Interceptions in Opp Field p90", f"{avg_int_att_p90:.1f}", f"Total: {total_int_att_all}"),
             ])
@@ -879,7 +879,7 @@ if num_matches > 0:
 
 # --- PASS MAPS AND DETAILS SECTION ---
 st.markdown("---")
-st.markdown("### Match Details — Passes")
+st.markdown("### Match Details - Passes")
 
 col_f1, col_f2 = st.columns(2)
 with col_f1:
@@ -903,7 +903,7 @@ def apply_filter(df):
     if pass_filter == "Successful": return df[df["is_won"]].copy()
     if pass_filter == "Unsuccessful": return df[~df["is_won"]].copy()
     if pass_filter == "Progressive": return df[df["progressive"]].copy()
-    if pass_filter == "Final Third": return df[(df["x_start"] &lt; FINAL_THIRD_LINE_X) & (df["x_end"] >= FINAL_THIRD_LINE_X)].copy()
+    if pass_filter == "Final Third": return df[(df["x_start"] < FINAL_THIRD_LINE_X) & (df["x_end"] >= FINAL_THIRD_LINE_X)].copy()
     if pass_filter == "Crosses": return df[df["is_cross"]].copy()
     return df.copy()
 
@@ -944,34 +944,34 @@ st.markdown("<br>", unsafe_allow_html=True)
 col_s1, col_s2, col_s3 = st.columns(3)
 if force_avg:
     with col_s1:
-        section_card("📋 Pass Overview", C_BLUE_PASTEL, [
+        section_card("Pass Overview", C_BLUE_PASTEL, [
             ("Total Passes", f"{s_game['total_p90']:.1f}"),
             ("Successful %", f"{s_game['accuracy_pct']:.1f}%"),
         ])
     with col_s2:
-        section_card("📊 Advanced", C_GREEN_PASTEL, [
+        section_card("Advanced", C_GREEN_PASTEL, [
             ("Progressive", f"{s_game['prog_p90']:.1f}"),
             ("Final Third", f"{s_game['f3_p90']:.1f}"),
         ])
     with col_s3:
-        section_card("⚡ Impact", C_AMBER_PASTEL, [
+        section_card("Impact", C_AMBER_PASTEL, [
             ("% Positive Impact", f"{s_game['pos_pct']:.1f}%"),
             ("Pass Impact Value", f"{s_game['xt_p90']:.1f}"),
         ])
 else:
     with col_s1:
-        cmp_section_card("📋 Pass Overview", C_BLUE_PASTEL, [
+        cmp_section_card("Pass Overview", C_BLUE_PASTEL, [
             ("Total Passes", s_game["total_p90"], f"{s_avg['total_p90']:.1f}"),
             ("Successful %", s_game["accuracy_pct"], s_avg["accuracy_pct"],
              f"{s_game['accuracy_pct']:.1f}%", f"{s_avg['accuracy_pct']:.1f}%"),
         ])
     with col_s2:
-        cmp_section_card("📊 Advanced", C_GREEN_PASTEL, [
+        cmp_section_card("Advanced", C_GREEN_PASTEL, [
             ("Progressive", s_game["prog_p90"], f"{s_avg['prog_p90']:.1f}"),
             ("Final Third", s_game["f3_p90"], f"{s_avg['f3_p90']:.1f}"),
         ])
     with col_s3:
-        cmp_section_card("⚡ Impact", C_AMBER_PASTEL, [
+        cmp_section_card("Impact", C_AMBER_PASTEL, [
             ("% Positive Impact", s_game["pos_pct"], s_avg["pos_pct"],
              f"{s_game['pos_pct']:.1f}%", f"{s_avg['pos_pct']:.1f}%",
              "Passes that generated a positive impact based on where they ended on the field"),
@@ -982,7 +982,7 @@ else:
 
 # --- DEFENSIVE MAPS AND DETAILS SECTION ---
 st.markdown("---")
-st.markdown("### Match Details — Defensive Actions")
+st.markdown("### Match Details - Defensive Actions")
 
 col_df1, col_df2 = st.columns(2)
 with col_df1:
@@ -1041,34 +1041,34 @@ st.markdown("<br>", unsafe_allow_html=True)
 col_ds1, col_ds2, col_ds3 = st.columns(3)
 if force_avg_def:
     with col_ds1:
-        section_card("🛡️ General", C_BLUE_PASTEL, [
+        section_card("General", C_BLUE_PASTEL, [
             ("Defensive Actions", f"{d_game['total_actions_p90']:.1f}"),
             ("Actions in Opp. Field", f"{d_game['actions_attacking_p90']:.1f}"),
         ])
     with col_ds2:
-        section_card("⚔️ Duels", C_GREEN_PASTEL, [
+        section_card("Duels", C_GREEN_PASTEL, [
             ("Defensive Duels", f"{d_game['duels_p90']:.1f}"),
             ("% Duels Won", f"{d_game['duels_won_pct']:.1f}%"),
         ])
     with col_ds3:
-        section_card("👁️ Interceptions", C_AMBER_PASTEL, [
+        section_card("Interceptions", C_AMBER_PASTEL, [
             ("Interceptions", f"{d_game['interceptions_p90']:.1f}"),
             ("Interceptions in Opp Field", f"{d_game['interceptions_attacking_p90']:.1f}"),
         ])
 else:
     with col_ds1:
-        cmp_section_card("🛡️ General", C_BLUE_PASTEL, [
+        cmp_section_card("General", C_BLUE_PASTEL, [
             ("Defensive Actions", d_game["total_actions_p90"], f"{d_avg['total_actions_p90']:.1f}"),
             ("Actions in Opp. Field", d_game["actions_attacking_p90"], f"{d_avg['actions_attacking_p90']:.1f}"),
         ])
     with col_ds2:
-        cmp_section_card("⚔️ Duels", C_GREEN_PASTEL, [
+        cmp_section_card("Duels", C_GREEN_PASTEL, [
             ("Defensive Duels", d_game["duels_p90"], f"{d_avg['duels_p90']:.1f}"),
             ("% Duels Won", d_game["duels_won_pct"], d_avg["duels_won_pct"],
              f"{d_game['duels_won_pct']:.1f}%", f"{d_avg['duels_won_pct']:.1f}%"),
         ])
     with col_ds3:
-        cmp_section_card("👁️ Interceptions", C_AMBER_PASTEL, [
+        cmp_section_card("Interceptions", C_AMBER_PASTEL, [
             ("Interceptions", d_game["interceptions_p90"], f"{d_avg['interceptions_p90']:.1f}"),
             ("Interceptions in Opp Field", d_game["interceptions_attacking_p90"], f"{d_avg['interceptions_attacking_p90']:.1f}"),
         ])
