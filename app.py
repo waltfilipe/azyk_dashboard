@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib
-
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from mplsoccer import Pitch
@@ -29,7 +28,7 @@ LANE_LEFT_MIN = 53.33
 LANE_RIGHT_MAX = 26.67
 GOAL_X = 120.0
 GOAL_Y = 40.0
-FIG_W, FIG_H = 5.5, 3.7
+FIG_W, FIG_H = 5.2, 3.5
 FIG_DPI = 180
 COLOR_SUCCESS = "#c8c8c8"
 COLOR_PROGRESSIVE = "#2F80ED"
@@ -479,9 +478,9 @@ def _arrow_html(val_game: float, val_avg: float) -> str:
 def section_card(title, border_color, items):
     bg = _hex_to_rgba(border_color, 0.55)
     bd = _hex_to_rgba(border_color, 0.30)
-    html = f'<div style="background:{bg};border-radius:12px;padding:8px 12px 10px 12px;margin-bottom:10px;border-left:3px solid {bd};">'
-    html += f'<div style="font-size:16px;font-weight:700;color:#ffffff;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">{title}</div>'
-    html += '<div style="display:flex;flex-direction:column;gap:4px;">'
+    html = f'<div style="background:{bg};border:1px solid {bd};border-radius:12px;padding:18px 12px 12px 12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.3);">'
+    html += f'<div style="font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px;color:{border_color};">{title}</div>'
+    html += f'<div>'
     for idx, item in enumerate(items):
         label = item[0]
         value = item[1]
@@ -490,27 +489,26 @@ def section_card(title, border_color, items):
         is_last = idx == len(items) - 1
         sep = "" if is_last else 'style="border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:10px;margin-bottom:10px"'
         html += f'<div {sep}>'
-        html += '<div style="display:flex;justify-content:space-between;align-items:baseline;">'
+        html += f'<div>'
         if tooltip:
-            label_html = f'{label} <span style="color:#ffffff66;font-size:10px;cursor:help;">?</span>'
-            html += f'<span style="font-size:12px;color:#ffffff;">{label_html}</span>'
+            label_html = f'{label} <span style="cursor:help;font-size:12px;color:#ffffff80;" title="{tooltip}">?</span>'
+            html += f'<span style="color:#ffffff;font-size:15px;font-weight:500;margin-bottom:2px;">{label_html}</span>'
         else:
-            html += f'<span style="font-size:12px;color:#ffffff;">{label}</span>'
-        html += ''
-        html += f'<span style="font-size:15px;font-weight:700;color:#ffffff;">{value}</span>'
-        html += '</div>'
+            html += f'<span style="color:#ffffff;font-size:15px;font-weight:500;margin-bottom:2px;">{label}</span>'
+        html += f'</div>'
+        html += f'<div style="color:#ffffff;font-size:18px;font-weight:700;">{value}</div>'
         if sub:
-            html += f'<div style="font-size:10px;color:#ffffff66;margin-top:2px;">{sub}</div>'
-        html += '</div>'
+            html += f'<div style="color:#a0a0a8;font-size:12px;margin-top:1px;">{sub}</div>'
+        html += f'</div>'
     html += '</div></div>'
     st.markdown(html, unsafe_allow_html=True)
 
 def cmp_section_card(title, border_color, items):
     bg = _hex_to_rgba(border_color, 0.55)
     bd = _hex_to_rgba(border_color, 0.30)
-    html = f'<div style="background:{bg};border-radius:12px;padding:8px 12px 10px 12px;margin-bottom:10px;border-left:3px solid {bd};">'
-    html += f'<div style="font-size:16px;font-weight:700;color:#ffffff;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">{title}</div>'
-    html += '<div style="display:flex;flex-direction:column;gap:4px;">'
+    html = f'<div style="background:{bg};border:1px solid {bd};border-radius:12px;padding:18px 12px 12px 12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.3);">'
+    html += f'<div style="font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px;color:{border_color};">{title}</div>'
+    html += f'<div>'
     for idx, item in enumerate(items):
         label = item[0]
         val_game = item[1]
@@ -522,17 +520,16 @@ def cmp_section_card(title, border_color, items):
         is_last = idx == len(items) - 1
         sep = "" if is_last else 'style="border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:10px;margin-bottom:10px"'
         html += f'<div {sep}>'
-        html += '<div style="display:flex;justify-content:space-between;align-items:baseline;">'
+        html += f'<div>'
         if tooltip:
-            label_html = f'{label} <span style="color:#ffffff66;font-size:10px;cursor:help;">?</span>'
-            html += f'<span style="font-size:12px;color:#ffffff;">{label_html}</span>'
+            label_html = f'{label} <span style="cursor:help;font-size:12px;color:#ffffff80;" title="{tooltip}">?</span>'
+            html += f'<span style="color:#ffffff;font-size:15px;font-weight:500;margin-bottom:2px;">{label_html}</span>'
         else:
-            html += f'<span style="font-size:12px;color:#ffffff;">{label}</span>'
-        html += ''
-        html += f'<span style="font-size:15px;font-weight:700;color:#ffffff;">{disp_game}{arrow}</span>'
-        html += '</div>'
-        html += f'<div style="font-size:10px;color:#ffffff66;margin-top:2px;">AVG: {disp_avg}</div>'
-        html += '</div>'
+            html += f'<span style="color:#ffffff;font-size:15px;font-weight:500;margin-bottom:2px;">{label}</span>'
+        html += f'</div>'
+        html += f'<div style="color:#ffffff;font-size:18px;font-weight:700;">{disp_game}{arrow}</div>'
+        html += f'<div style="color:#a0a0a8;font-size:12px;margin-top:1px;">AVG: {disp_avg}</div>'
+        html += f'</div>'
     html += '</div></div>'
     st.markdown(html, unsafe_allow_html=True)
 
@@ -578,9 +575,11 @@ def draw_pass_map(df):
         else:
             color, alpha = COLOR_SUCCESS, ALPHA_SUCCESS
         pitch.arrows(row["x_start"], row["y_start"], row["x_end"], row["y_end"],
-                     color=color, width=1.3, headwidth=2.0, headlength=2.0, ax=ax, zorder=3, alpha=alpha)
-        pitch.scatter(row["x_start"], row["y_start"], s=32, marker="o", color=color,
-                      edgecolors="white", linewidths=0.6, ax=ax, zorder=6, alpha=alpha)
+                     color=color, width=1.3, headwidth=2.0, headlength=2.0,
+                     ax=ax, zorder=3, alpha=alpha)
+        pitch.scatter(row["x_start"], row["y_start"], s=32, marker="o",
+                      color=color, edgecolors="white", linewidths=0.6,
+                      ax=ax, zorder=6, alpha=alpha)
     leg_handles = [
         Line2D([0], [0], color=COLOR_SUCCESS, lw=2.0, label="Completed", alpha=0.65),
         Line2D([0], [0], color=COLOR_PROGRESSIVE, lw=2.0, label="Progressive", alpha=0.90),
@@ -624,8 +623,7 @@ def draw_corridor_heatmap(df):
             ax.add_patch(Rectangle((x0_, y0), x1_ - x0_, y1 - y0,
                                    facecolor=cmap(norm(value)),
                                    edgecolor=(1, 1, 1, 0.12), lw=0.5, alpha=0.95, zorder=2))
-            ax.text((x0_ + x1_) / 2, (y0 + y1) / 2, str(value),
-                    ha="center", va="center",
+            ax.text((x0_ + x1_) / 2, (y0 + y1) / 2, str(value), ha="center", va="center",
                     color="#000000" if value <= threshold else "#ffffff",
                     fontsize=9, fontweight="700" if value >= vmax * 0.5 else "600", zorder=4)
     ax.axhline(y=LANE_LEFT_MIN, color="#ffffff", lw=0.5, alpha=0.15, linestyle="--", zorder=3)
@@ -658,11 +656,11 @@ def draw_top_xt_map(df, top_n=5):
             color = CMAP_TOP10(NORM_TOP10(np.clip(val, 0.05, 0.40)))
             _draw_comet_arrow(ax, float(row["x_start"]), float(row["y_start"]),
                               float(row["x_end"]), float(row["y_end"]), color)
-    sm = plt.cm.ScalarMappable(cmap=CMAP_TOP10, norm=NORM_TOP10)
-    cbar = fig.colorbar(sm, ax=ax, fraction=0.020, pad=0.02, shrink=0.60)
-    cbar.set_label("Pass Impact", color="#ffffff", fontsize=8)
-    cbar.ax.yaxis.set_tick_params(color="#ffffff", labelsize=7)
-    plt.setp(plt.getp(cbar.ax.axes, "yticklabels"), color="#ffffff")
+        sm = plt.cm.ScalarMappable(cmap=CMAP_TOP10, norm=NORM_TOP10)
+        cbar = fig.colorbar(sm, ax=ax, fraction=0.020, pad=0.02, shrink=0.60)
+        cbar.set_label("Pass Impact", color="#ffffff", fontsize=8)
+        cbar.ax.yaxis.set_tick_params(color="#ffffff", labelsize=7)
+        plt.setp(plt.getp(cbar.ax.axes, "yticklabels"), color="#ffffff")
     _attack_arrow(fig, has_cbar=True)
     return _save_fig(fig)
 
@@ -680,9 +678,11 @@ def draw_cross_map(df):
         else:
             color, alpha = COLOR_CROSS_LOST, 0.85
         pitch.arrows(row["x_start"], row["y_start"], row["x_end"], row["y_end"],
-                     color=color, width=1.6, headwidth=2.5, headlength=2.5, ax=ax, zorder=4, alpha=alpha)
-        pitch.scatter(row["x_start"], row["y_start"], s=40, marker="d", color=color,
-                      edgecolors="white", linewidths=0.8, ax=ax, zorder=6, alpha=alpha)
+                     color=color, width=1.6, headwidth=2.5, headlength=2.5,
+                     ax=ax, zorder=4, alpha=alpha)
+        pitch.scatter(row["x_start"], row["y_start"], s=40, marker="d",
+                      color=color, edgecolors="white", linewidths=0.8,
+                      ax=ax, zorder=6, alpha=alpha)
     leg_handles = [
         Line2D([0], [0], color=COLOR_CROSS_WON, lw=2.0, label="Cross Completed", alpha=0.85),
         Line2D([0], [0], color=COLOR_CROSS_LOST, lw=2.0, label="Cross Incomplete", alpha=0.85),
@@ -728,15 +728,18 @@ def draw_defensive_map(df):
 # ============================================================
 with st.sidebar:
     st.markdown(
-        "<h1 style='text-align:center;font-size:24px;margin-bottom:8px;'>Stats Dashboard</h1>",
+        "<div style='font-size:22px;font-weight:700;text-align:center;color:#ffffff;margin-bottom:12px;'>Stats Dashboard</div>",
         unsafe_allow_html=True
     )
     img_path = "PHOTO-2025-10-24-21-10-55-2-e1761676493155.jpg"
     if os.path.exists(img_path):
         st.sidebar.image(img_path, use_container_width=True)
     st.sidebar.markdown(
-        "<h2 style='text-align:center;font-size:18px;margin-bottom:4px;'>Azyk Gomez-Carmona</h2>"
-        "<p style='text-align:center;font-size:14px;color:#888;'>Right-Back</p>",
+        "<div style='font-size:20px;font-weight:600;text-align:center;color:#ffffff;margin-top:8px;'>Azyk Gomez-Carmona</div>",
+        unsafe_allow_html=True
+    )
+    st.sidebar.markdown(
+        "<div style='font-size:16px;font-weight:400;text-align:center;color:#a0a0a8;margin-bottom:4px;'>Right-Back</div>",
         unsafe_allow_html=True
     )
 
@@ -748,7 +751,7 @@ all_match_stats = [compute_stats(dfs_by_match[m], m) for m in dfs_by_match]
 defensive_num_matches = len(defensive_dfs_by_match)
 defensive_all_stats = [compute_defensive_stats(defensive_dfs_by_match[m], m) for m in defensive_dfs_by_match]
 
-st.markdown("### Overall Performance Summary")
+st.markdown("<div style='font-size:26px;font-weight:700;color:#ffffff;margin-bottom:16px;'>Overall Performance Summary</div>", unsafe_allow_html=True)
 
 if num_matches > 0:
     total_passes_all = sum(s['total_passes'] for s in all_match_stats)
@@ -764,7 +767,7 @@ if num_matches > 0:
     avg_xt_p90 = sum(s['xt_p90'] for s in all_match_stats) / num_matches
     avg_total_p90 = sum(s['total_p90'] for s in all_match_stats) / num_matches
 
-    st.markdown("### Passes")
+    st.markdown("<div style='font-size:20px;font-weight:600;color:#ffffff;margin-top:8px;margin-bottom:8px;'>Passes</div>", unsafe_allow_html=True)
     col_s1, col_s2, col_s3 = st.columns(3)
     with col_s1:
         section_card("Overview", C_BLUE_PASTEL, [
@@ -784,7 +787,7 @@ if num_matches > 0:
              "Calculation used to evaluate the offensive value added by a pass."),
         ])
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
 
     if defensive_num_matches > 0:
         total_def_actions_all = sum(s['total_actions'] for s in defensive_all_stats)
@@ -800,7 +803,7 @@ if num_matches > 0:
         avg_interceptions_p90 = sum(s['interceptions_p90'] for s in defensive_all_stats) / defensive_num_matches
         avg_int_att_p90 = sum(s['interceptions_attacking_p90'] for s in defensive_all_stats) / defensive_num_matches
 
-        st.markdown("### Defensive Actions")
+        st.markdown("<div style='font-size:20px;font-weight:600;color:#ffffff;margin-top:16px;margin-bottom:8px;'>Defensive Actions</div>", unsafe_allow_html=True)
         col_d1, col_d2, col_d3 = st.columns(3)
         with col_d1:
             section_card("General", C_BLUE_PASTEL, [
@@ -818,13 +821,13 @@ if num_matches > 0:
                 ("Interceptions in Opp. Field p90", f"{avg_int_att_p90:.1f}", f"Total: {total_int_att_all}"),
             ])
 
-    st.markdown(f"<p style='font-size:12px;color:#666;'>{num_matches} matches collected</p>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size:13px;color:#888888;margin-top:8px;'>{num_matches} matches collected</div>", unsafe_allow_html=True)
 
 # ============================================================
 # MATCH DETAILS — PASSES
 # ============================================================
 st.markdown("---")
-st.markdown("### Match Details — Passes")
+st.markdown("<div style='font-size:22px;font-weight:700;color:#ffffff;margin-bottom:12px;'>Match Details — Passes</div>", unsafe_allow_html=True)
 
 col_f1, col_f2 = st.columns(2)
 with col_f1:
@@ -882,8 +885,9 @@ img_cross_game = draw_cross_map(df_game_filtered)
 img_ht_game = draw_corridor_heatmap(df_game)
 img_xt_game = draw_top_xt_map(df_game, top_n=5)
 
-# Stats cards — right after filters, before maps
-st.markdown("<br>", unsafe_allow_html=True)
+# Stats cards
+st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+
 if force_avg:
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -925,29 +929,29 @@ else:
              "Calculation used to define the value of pass impact based on expected threat (xT) progression"),
         ])
 
-# Maps — reordered: Pass Map, Cross Map, Zone Heatmap, Top 5 Pass Impact
-st.markdown("<br>", unsafe_allow_html=True)
+# Maps
+st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
 col_m1, col_m2 = st.columns(2)
 with col_m1:
-    st.markdown("**Pass Map**", unsafe_allow_html=True)
+    st.markdown("<div style='font-size:16px;font-weight:600;color:#ffffff;margin-bottom:4px;'>Pass Map</div>", unsafe_allow_html=True)
     st.image(img_pm_game, use_container_width=True)
 with col_m2:
-    st.markdown("**Cross Map**", unsafe_allow_html=True)
+    st.markdown("<div style='font-size:16px;font-weight:600;color:#ffffff;margin-bottom:4px;'>Cross Map</div>", unsafe_allow_html=True)
     st.image(img_cross_game, use_container_width=True)
 
 col_m3, col_m4 = st.columns(2)
 with col_m3:
-    st.markdown("**Zone Heatmap**", unsafe_allow_html=True)
+    st.markdown("<div style='font-size:16px;font-weight:600;color:#ffffff;margin-bottom:4px;'>Zone Heatmap</div>", unsafe_allow_html=True)
     st.image(img_ht_game, use_container_width=True)
 with col_m4:
-    st.markdown("**Top 5 Pass Impact**", unsafe_allow_html=True)
+    st.markdown("<div style='font-size:16px;font-weight:600;color:#ffffff;margin-bottom:4px;'>Top 5 Pass Impact</div>", unsafe_allow_html=True)
     st.image(img_xt_game, use_container_width=True)
 
 # ============================================================
 # MATCH DETAILS — DEFENSIVE ACTIONS
 # ============================================================
 st.markdown("---")
-st.markdown("### Match Details — Defensive Actions")
+st.markdown("<div style='font-size:22px;font-weight:700;color:#ffffff;margin-bottom:12px;'>Match Details — Defensive Actions</div>", unsafe_allow_html=True)
 
 col_df1, col_df2 = st.columns(2)
 with col_df1:
@@ -972,6 +976,7 @@ else:
     df_def_game = df_def_game_raw.copy()
 
 d_game = compute_defensive_stats(df_def_game, def_match_name_for_stats)
+
 def_all = [compute_defensive_stats(defensive_dfs_by_match[m], m) for m in defensive_dfs_by_match]
 d_avg = {}
 if len(def_all) > 0:
@@ -992,10 +997,10 @@ img_def_map = draw_defensive_map(df_def_game)
 # Map + stats side by side
 col_dm, col_ds_right = st.columns([3, 2])
 with col_dm:
-    st.markdown("**Defensive Actions Map**", unsafe_allow_html=True)
+    st.markdown("<div style='font-size:16px;font-weight:600;color:#ffffff;margin-bottom:4px;'>Defensive Actions Map</div>", unsafe_allow_html=True)
     st.image(img_def_map, use_container_width=True)
 with col_ds_right:
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
     if force_avg_def:
         section_card("General", C_BLUE_PASTEL, [
             ("Defensive Actions p90", f"{d_game['total_actions_p90']:.1f}"),
@@ -1021,8 +1026,7 @@ with col_ds_right:
         ])
         cmp_section_card("Interceptions", C_AMBER_PASTEL, [
             ("Interceptions p90", d_game["interceptions_p90"], f"{d_avg['interceptions_p90']:.1f}"),
-            ("Interceptions in Opp. Field p90", d_game["interceptions_attacking_p90"],
-             f"{d_avg['interceptions_attacking_p90']:.1f}"),
+            ("Interceptions in Opp. Field p90", d_game["interceptions_attacking_p90"], f"{d_avg['interceptions_attacking_p90']:.1f}"),
         ])
 
-st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<div style='height:16px;'></div>", unsafe_allow_html=True)
