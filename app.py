@@ -1,95 +1,249 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Scout Dashboard", layout="wide")
+st.set_page_config(layout="wide", page_title="Football Performance Dashboard")
 
-# Dados dos jogos
-data = {
-    "vs Salt Lake": {"min": 85, "p_suc": 16, "p_fal": 4, "int": 3, "d_def_s": 4, "d_def_f": 3, "d_of_s": 0, "d_of_f": 1, "c_s": 1, "c_f": 2},
-    "vs Vancouver": {"min": 45, "p_suc": 19, "p_fal": 3, "int": 3, "d_def_s": 1, "d_def_f": 0, "d_of_s": 0, "d_of_f": 0, "c_s": 0, "c_f": 0},
-    "vs LAFC":       {"min": 82, "p_suc": 13, "p_fal": 1, "int": 3, "d_def_s": 3, "d_def_f": 4, "d_of_s": 2, "d_of_f": 0, "c_s": 0, "c_f": 1}
-}
+# ── Data ──
+data = [
+    {"match": "vs Salt Lake", "min": 85, "passes_success": 16, "passes_fail": 4, "interceptions": 3, "duel_def_s": 4, "duel_def_f": 3, "duel_off_s": 0, "duel_off_f": 1, "cross_s": 1, "cross_f": 2},
+    {"match": "vs Vancouver", "min": 45, "passes_success": 19, "passes_fail": 3, "interceptions": 3, "duel_def_s": 1, "duel_def_f": 0, "duel_off_s": 0, "duel_off_f": 0, "cross_s": 0, "cross_f": 0},
+    {"match": "vs LAFC",       "min": 82, "passes_success": 13, "passes_fail": 1, "interceptions": 3, "duel_def_s": 3, "duel_def_f": 4, "duel_off_s": 2, "duel_off_f": 0, "cross_s": 0, "cross_f": 1}
+]
+df = pd.DataFrame(data)
 
-def get_stats(df):
-    total_min = df['min'].sum()
-    p_s = df['p_suc'].sum(); p_f = df['p_fal'].sum()
-    d_def_s = df['d_def_s'].sum(); d_def_f = df['d_def_f'].sum()
-    d_of_s = df['d_of_s'].sum(); d_of_f = df['d_of_f'].sum()
-    d_s = d_def_s + d_of_s; d_f = d_def_f + d_of_f
-    return {
-        "min": total_min,
-        "p_p90": round((p_s + p_f) / total_min * 90, 1),
-        "p_acc": round(p_s / (p_s + p_f) * 100, 1) if (p_s + p_f) > 0 else 0,
-        "p_total": p_s + p_f, "p_suc": p_s,
-        "d_p90": round((d_s + d_f) / total_min * 90, 1),
-        "d_acc": round(d_s / (d_s + d_f) * 100, 1) if (d_s + d_f) > 0 else 0,
-        "d_def_total": d_def_s + d_def_f, "d_def_s": d_def_s, "d_def_f": d_def_f,
-        "d_of_total": d_of_s + d_of_f, "d_of_s": d_of_s, "d_of_f": d_of_f,
-        "int": int(df['int'].sum()),
-        "c_s": int(df['c_s'].sum()), "c_f": int(df['c_f'].sum()),
-        "c_total": int(df['c_s'].sum() + df['c_f'].sum())
-    }
-
-# UI
-st.title("📊 Scout Performance Dashboard")
-st.markdown("Análise de performance por partida — métricas p90 e taxas de acerto")
-
-match = st.selectbox("Selecione a Partida", ["Todos os jogos"] + list(data.keys()))
-df = pd.DataFrame(data).T if match == "Todos os jogos" else pd.DataFrame([data[match]], index=[match])
-stats = get_stats(df)
-
-# CSS customizado
+# ── CSS ──
 st.markdown("""
 <style>
-    .card { padding: 22px 20px; border-radius: 12px; color: white; text-align: center; margin: 8px 0; height: 160px; display: flex; flex-direction: column; justify-content: center; }
-    .card h4 { margin: 0 0 6px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; opacity: 0.85; }
-    .card .label { font-size: 14px; color: #B0B0B0; margin: 4px 0; }
-    .card .value { font-size: 32px; font-weight: 700; margin: 4px 0; }
-    .card .sub { font-size: 13px; opacity: 0.7; margin: 2px 0; }
-    .total-bar { display: flex; justify-content: space-between; font-size: 13px; padding: 0 8px; opacity: 0.8; }
+    .main, .stApp { background: #0A0E17; }
+    .block-container { padding-top: 2rem; }
+
+    .card {
+        height: 178px;
+        border-radius: 14px;
+        padding: 20px 22px 16px 22px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+        border: 0.5px solid;
+        margin-bottom: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.45); }
+
+    .card::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        border-radius: 14px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 100%);
+        pointer-events: none;
+    }
+
+    .blue-card  { background: linear-gradient(135deg, #1a2744 0%, #162040 100%); border-color: rgba(45, 74, 122, 0.25); }
+    .green-card { background: linear-gradient(135deg, #1a3a2a 0%, #162e22 100%); border-color: rgba(45, 90, 58, 0.25); }
+    .gold-card  { background: linear-gradient(135deg, #3a2e14 0%, #2e2410 100%); border-color: rgba(90, 74, 26, 0.25); }
+
+    .card-header {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+        color: #8892a4;
+        opacity: 0.55;
+        margin-bottom: 0;
+        line-height: 1;
+    }
+    .card-label {
+        font-size: 13px;
+        color: #8892a4;
+        margin: 0;
+        line-height: 1.2;
+    }
+    .card-value {
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: #FFFFFF;
+        margin: 2px 0 0 0;
+        line-height: 1.1;
+    }
+    .card-value-small {
+        font-size: 24px;
+        font-weight: 400;
+        color: #FFFFFF;
+        opacity: 0.7;
+        margin: 2px 0 0 0;
+        line-height: 1.1;
+    }
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 6px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .card-footer-item {
+        font-size: 12px;
+        color: #5a6478;
+        letter-spacing: 0.3px;
+    }
+    .card-footer-item strong {
+        color: #b0b8c8;
+        font-weight: 600;
+    }
+
+    /* section title */
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #e0e4ee;
+        margin: 28px 0 14px 0;
+        letter-spacing: 0.3px;
+    }
+
+    /* sidebar */
+    .css-1d391kg, .css-12oz5g7 { background: #0D121E; }
+    .stSelectbox label { color: #8892a4; font-size: 13px; }
+
+    /* dataframe */
+    .stDataFrame { background: transparent; }
+    .stDataFrame td, .stDataFrame th { color: #c8ccd6 !important; background: transparent !important; border-color: rgba(255,255,255,0.06) !important; }
+    .stDataFrame thead tr th { background: rgba(255,255,255,0.04) !important; font-weight: 600 !important; font-size: 12px !important; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* divider */
+    hr { border-color: rgba(255,255,255,0.06) !important; margin: 32px 0 !important; }
+
+    /* download button */
+    .stDownloadButton button {
+        background: rgba(255,255,255,0.06) !important;
+        color: #c8ccd6 !important;
+        border: 0.5px solid rgba(255,255,255,0.1) !important;
+        border-radius: 8px !important;
+        font-size: 13px !important;
+        transition: background 0.15s;
+    }
+    .stDownloadButton button:hover { background: rgba(255,255,255,0.12) !important; color: #fff !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# Linha 1 — Passes
-st.subheader("📮 Passes")
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown(f"<div class='card' style='background:#1E3A5F'><h4>📋 Visão Geral</h4><div class='label'>Passes p90</div><div class='value'>{stats['p_p90']}</div><div class='total-bar'><span>Total: {stats['p_total']}</span><span>Completos: {stats['p_suc']}</span></div></div>", unsafe_allow_html=True)
+# ── Sidebar ──
+with st.sidebar:
+    st.markdown("### ⚽ Scout Dashboard")
+    st.markdown("---")
+    match_select = st.selectbox("Partida", ["Todos os jogos"] + df["match"].tolist())
+
+if match_select != "Todos os jogos":
+    fdf = df[df["match"] == match_select].copy()
+else:
+    fdf = df.copy()
+
+total_min = fdf["min"].sum()
+factor = 90 / total_min if total_min > 0 else 0
+
+# ── Helpers ──
+def fmt_p90(v): return f"{v * factor:.1f}"
+
+def card_blue(header, label, value, footer_left, footer_right):
+    st.markdown(f"""
+    <div class='card blue-card'>
+        <div class='card-header'>{header}</div>
+        <div>
+            <div class='card-label'>{label}</div>
+            <div class='card-value'>{value}</div>
+        </div>
+        <div class='card-footer'>
+            <div class='card-footer-item'>{footer_left}</div>
+            <div class='card-footer-item'>{footer_right}</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+def card_green(header, label, value, footer_left, footer_right):
+    st.markdown(f"""
+    <div class='card green-card'>
+        <div class='card-header'>{header}</div>
+        <div>
+            <div class='card-label'>{label}</div>
+            <div class='card-value'>{value}</div>
+        </div>
+        <div class='card-footer'>
+            <div class='card-footer-item'>{footer_left}</div>
+            <div class='card-footer-item'>{footer_right}</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+def card_gold(header, label, value, footer_left, footer_right):
+    st.markdown(f"""
+    <div class='card gold-card'>
+        <div class='card-header'>{header}</div>
+        <div>
+            <div class='card-label'>{label}</div>
+            <div class='card-value'>{value}</div>
+        </div>
+        <div class='card-footer'>
+            <div class='card-footer-item'>{footer_left}</div>
+            <div class='card-footer-item'>{footer_right}</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ── Computed totals ──
+p_s  = fdf["passes_success"].sum(); p_f  = fdf["passes_fail"].sum()
+d_s  = fdf["duel_def_s"].sum() + fdf["duel_off_s"].sum()
+d_f  = fdf["duel_def_f"].sum() + fdf["duel_off_f"].sum()
+dds  = fdf["duel_def_s"].sum(); dos = fdf["duel_off_s"].sum()
+inter= fdf["interceptions"].sum()
+c_s  = fdf["cross_s"].sum(); c_f = fdf["cross_f"].sum()
+
+pass_acc = round(p_s / (p_s + p_f) * 100, 1) if (p_s + p_f) else 0
+duel_acc = round(d_s / (d_s + d_f) * 100, 1) if (d_s + d_f) else 0
+cross_acc = round(c_s / (c_s + c_f) * 100, 1) if (c_s + c_f) else 0
+
+# ══════════════════════════════════════════
+#  MAIN CONTENT
+# ══════════════════════════════════════════
+st.markdown(f"<div style='display:flex;align-items:baseline;gap:16px;'><span style='font-size:26px;font-weight:700;color:#e8ecf4;'>Performance Dashboard</span><span style='font-size:14px;color:#5a6478;'>minutos: {total_min}</span></div>", unsafe_allow_html=True)
+
+# ── Section: Passes ──
+st.markdown("<div class='section-title'>📮 Passes</div>", unsafe_allow_html=True)
+c1, c2, c3 = st.columns(3)
+with c1: card_blue("📋 VISÃO GERAL", "Passes p90", fmt_p90(p_s + p_f), f"Total: <strong>{p_s + p_f}</strong>", f"Completos: <strong>{p_s}</strong>")
+with c2: card_blue("📊 PRECISÃO", "% Acerto", f"{pass_acc}%", f"Certos: <strong>{p_s}</strong>", f"Errados: <strong>{p_f}</strong>")
+with c3: card_blue("🎯 IMPACTO", "Passes Certos p90", fmt_p90(p_s), "", f"min: <strong>{total_min}</strong>")
+
+# ── Section: Ações Defensivas ──
+st.markdown("<div class='section-title'>🛡️ Ações Defensivas</div>", unsafe_allow_html=True)
+d1, d2, d3 = st.columns(3)
+acoes_def_total = inter + d_s + d_f
+with d1: card_green("📋 GERAL", "Ações Def. p90", fmt_p90(acoes_def_total), f"Sucesso: <strong>{d_s}</strong>", f"Falha: <strong>{d_f}</strong>")
+with d2: card_green("⚔️ DUELOS", "% Ganhos", f"{duel_acc}%", f"Def: <strong>{dds}</strong>", f"Of: <strong>{dos}</strong>")
+with d3: card_green("✖️ INTERCEPTAÇÕES", "Total", str(inter), f"p90: <strong>{fmt_p90(inter)}</strong>", "")
+
+# ── Section: Cruzamentos ──
+st.markdown("<div class='section-title'>🎯 Cruzamentos</div>", unsafe_allow_html=True)
+x1, x2, x3 = st.columns(3)
+with x1: card_gold("📋 GERAL", "Total", str(c_s + c_f), f"p90: <strong>{fmt_p90(c_s + c_f)}</strong>", "")
+with x2: card_gold("✅ SUCESSO", "Completados", str(c_s), f"<strong>{cross_acc}%</strong> acerto", "")
+with x3: card_gold("❌ FALHA", "Errados", str(c_f), "", "")
+
+# ── Data Table ──
+st.markdown("---")
+st.markdown("<div style='font-size:15px;font-weight:600;color:#c8ccd6;margin-bottom:12px;'>📋 Detalhamento por Partida</div>", unsafe_allow_html=True)
+
+display_df = fdf.rename(columns={
+    "match": "Partida", "min": "Min", "passes_success": "Passes OK", "passes_fail": "Passes Erro",
+    "interceptions": "Intercept.", "duel_def_s": "Duelo Def OK", "duel_def_f": "Duelo Def Erro",
+    "duel_off_s": "Duelo Of OK", "duel_off_f": "Duelo Of Erro",
+    "cross_s": "Cruz. OK", "cross_f": "Cruz. Erro"
+}).set_index("Partida")
+
+st.dataframe(display_df, use_container_width=True)
+
+col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    st.markdown(f"<div class='card' style='background:#2D5016'><h4>📊 Precisão</h4><div class='label'>% Acerto</div><div class='value'>{stats['p_acc']}%</div><div class='total-bar'><span>{stats['p_suc']} certos</span><span>{stats['p_total'] - stats['p_suc']} errados</span></div></div>", unsafe_allow_html=True)
-with col3:
-    p90_completados = round(stats['p_suc'] / stats['min'] * 90, 1) if stats['min'] > 0 else 0
-    st.markdown(f"<div class='card' style='background:#8B6914'><h4>🎯 Impacto</h4><div class='label'>Passes Certos p90</div><div class='value'>{p90_completados}</div><div class='sub'>minutos: {stats['min']}</div></div>", unsafe_allow_html=True)
-
-# Linha 2 — Ações Defensivas
-st.subheader("🛡️ Ações Defensivas")
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown(f"<div class='card' style='background:#1E3A5F'><h4>📋 Geral</h4><div class='label'>Ações Defensivas p90</div><div class='value'>{stats['d_p90']}</div><div class='total-bar'><span>Sucesso: {stats['d_def_s'] + stats['d_of_s']}</span><span>Falha: {stats['d_def_f'] + stats['d_of_f']}</span></div></div>", unsafe_allow_html=True)
-with col2:
-    st.markdown(f"<div class='card' style='background:#2D5016'><h4>⚔️ Duelos</h4><div class='label'>% Duelos Ganhos</div><div class='value'>{stats['d_acc']}%</div><div class='total-bar'><span>Def: {stats['d_def_s']}/{stats['d_def_total']}</span><span>Of: {stats['d_of_s']}/{stats['d_of_total']}</span></div></div>", unsafe_allow_html=True)
-with col3:
-    st.markdown(f"<div class='card' style='background:#8B6914'><h4>✖️ Interceptações</h4><div class='label'>Total</div><div class='value'>{stats['int']}</div><div class='sub'>p90: {round(stats['int'] / stats['min'] * 90, 1)}</div></div>", unsafe_allow_html=True)
-
-# Linha 3 — Cruzamentos
-st.subheader("🎯 Cruzamentos")
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown(f"<div class='card' style='background:#1E3A5F'><h4>📋 Geral</h4><div class='label'>Total Cruzamentos</div><div class='value'>{stats['c_total']}</div><div class='total-bar'><span>p90: {round(stats['c_total'] / stats['min'] * 90, 1)}</span></div></div>", unsafe_allow_html=True)
-with col2:
-    st.markdown(f"<div class='card' style='background:#2D5016'><h4>✅ Sucesso</h4><div class='label'>Completados</div><div class='value'>{stats['c_s']}</div><div class='sub'>{round(stats['c_s'] / stats['c_total'] * 100, 0) if stats['c_total'] > 0 else 0}% de acerto</div></div>", unsafe_allow_html=True)
-with col3:
-    st.markdown(f"<div class='card' style='background:#8B6914'><h4>❌ Falha</h4><div class='label'>Errados</div><div class='value'>{stats['c_f']}</div></div>", unsafe_allow_html=True)
-
-st.divider()
-
-# Tabela detalhada
-st.subheader("📋 Detalhamento por Partida")
-df_detail = df.copy()
-df_detail.columns = ["Min", "Passes OK", "Passes Erro", "Intercept.", "Duelo Def OK", "Duelo Def Erro", "Duelo Of OK", "Duelo Of Erro", "Cruz. OK", "Cruz. Erro"]
-df_detail.index.name = "Partida"
-st.dataframe(df_detail, use_container_width=True)
-
-# Botão exportar
-csv = df.to_csv(index=True).encode('utf-8')
-st.download_button("📥 Exportar CSV", csv, "performance.csv", "text/csv", use_container_width=True)
+    csv = fdf.to_csv(index=False).encode("utf-8")
+    st.download_button("📥 Exportar CSV", csv, "performance.csv", "text/csv", use_container_width=True)
