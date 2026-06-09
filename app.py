@@ -44,6 +44,8 @@ COLOR_SUCCESS = "#c8c8c8"
 COLOR_PROGRESSIVE = "#2F80ED"
 COLOR_FAIL = "#E07070"
 ALPHA_SUCCESS = 0.07
+COLOR_CROSS_WON = "#10b981"
+COLOR_CROSS_LOST = "#b91c1c"
 C_BLUE = "#2F80ED"
 C_BLUE_DARK = "#1a56db"
 C_GREEN = "#10b981"
@@ -138,86 +140,86 @@ def is_in_funnel_zone(x, y):
     """Check if a defensive action is in the penalty area + 15m extended zone."""
     return x <= FUNNEL_X_EXTEND and PENALTY_AREA_Y_MIN <= y <= PENALTY_AREA_Y_MAX
 
-# BASE PASSES — only the 3 new matches
+# BASE PASSES — only the 3 matches
 BASE_MATCHES_DATA = {
     "Real Salt Lake (05-10)": [
-        ("PASS WON", 115.52, 72.91, 109.54, 73.08, None),
-        ("PASS WON", 108.21, 53.46, 108.04, 39.67, None),
-        ("PASS WON", 103.05, 66.10, 96.24, 50.81, None),
-        ("PASS WON", 98.07, 73.08, 90.59, 61.94, None),
-        ("PASS WON", 92.25, 67.10, 74.63, 53.13, None),
-        ("PASS WON", 89.59, 74.91, 80.28, 60.61, None),
-        ("PASS WON", 69.31, 53.46, 72.97, 64.94, None),
-        ("PASS WON", 63.66, 68.76, 75.13, 49.14, None),
-        ("PASS WON", 67.65, 63.44, 67.65, 51.14, None),
-        ("PASS WON", 73.30, 74.91, 52.35, 66.60, None),
-        ("PASS WON", 55.35, 64.44, 49.53, 48.64, None),
-        ("PASS WON", 53.18, 51.97, 42.21, 41.16, None),
-        ("PASS WON", 42.71, 61.28, 41.55, 38.50, None),
-        ("PASS WON", 19.77, 58.62, 42.38, 58.12, None),
-        ("PASS WON", 23.93, 70.92, 8.30, 52.14, None),
-        ("PASS WON", 66.15, 58.95, 94.24, 68.76, None),
-        ("PASS WON", 97.90, 69.59, 88.76, 66.76, None),
-        ("PASS WON", 74.30, 65.77, 62.99, 53.80, None),
-        ("PASS WON", 69.48, 69.59, 60.66, 64.44, None),
-        ("PASS WON", 62.99, 72.91, 45.70, 62.77, None),
-        ("PASS WON", 51.19, 69.59, 51.02, 54.63, None),
-        ("PASS WON", 46.54, 74.58, 38.56, 62.77, None),
-        ("PASS WON", 39.39, 66.10, 49.36, 60.78, None),
-        ("PASS WON", 42.71, 67.59, 45.21, 57.62, None),
-        ("PASS WON", 47.86, 61.28, 35.23, 50.14, None),
-        ("PASS WON", 89.92, 70.42, 103.22, 30.36, None),
-        ("PASS LOST", 44.21, 63.27, 69.48, 19.72, None),
-        ("PASS LOST", 49.69, 71.58, 55.51, 60.61, None),
-        ("PASS LOST", 36.06, 55.96, 23.26, 56.29, None),
-        ("PASS LOST", 18.11, 74.08, 18.94, 60.61, None),
-        ("PASS LOST", 114.86, 70.92, 110.70, 40.17, None),
-        ("PASS LOST", 105.88, 72.42, 111.53, 62.61, None),
+        ("PASS_WON", 115.52, 72.91, 109.54, 73.08, None),
+        ("PASS_WON", 108.21, 53.46, 108.04, 39.67, None),
+        ("PASS_WON", 103.05, 66.10, 96.24, 50.81, None),
+        ("PASS_WON", 98.07, 73.08, 90.59, 61.94, None),
+        ("PASS_WON", 92.25, 67.10, 74.63, 53.13, None),
+        ("PASS_WON", 89.59, 74.91, 80.28, 60.61, None),
+        ("PASS_WON", 69.31, 53.46, 72.97, 64.94, None),
+        ("PASS_WON", 63.66, 68.76, 75.13, 49.14, None),
+        ("PASS_WON", 67.65, 63.44, 67.65, 51.14, None),
+        ("PASS_WON", 73.30, 74.91, 52.35, 66.60, None),
+        ("PASS_WON", 55.35, 64.44, 49.53, 48.64, None),
+        ("PASS_WON", 53.18, 51.97, 42.21, 41.16, None),
+        ("PASS_WON", 42.71, 61.28, 41.55, 38.50, None),
+        ("PASS_WON", 19.77, 58.62, 42.38, 58.12, None),
+        ("PASS_WON", 23.93, 70.92, 8.30, 52.14, None),
+        ("PASS_WON", 66.15, 58.95, 94.24, 68.76, None),
+        ("PASS_WON", 97.90, 69.59, 88.76, 66.76, None),
+        ("PASS_WON", 74.30, 65.77, 62.99, 53.80, None),
+        ("PASS_WON", 69.48, 69.59, 60.66, 64.44, None),
+        ("PASS_WON", 62.99, 72.91, 45.70, 62.77, None),
+        ("PASS_WON", 51.19, 69.59, 51.02, 54.63, None),
+        ("PASS_WON", 46.54, 74.58, 38.56, 62.77, None),
+        ("PASS_WON", 39.39, 66.10, 49.36, 60.78, None),
+        ("PASS_WON", 42.71, 67.59, 45.21, 57.62, None),
+        ("PASS_WON", 47.86, 61.28, 35.23, 50.14, None),
+        ("CROSS_WON", 89.92, 70.42, 103.22, 30.36, None),
+        ("PASS_LOST", 44.21, 63.27, 69.48, 19.72, None),
+        ("PASS_LOST", 49.69, 71.58, 55.51, 60.61, None),
+        ("PASS_LOST", 36.06, 55.96, 23.26, 56.29, None),
+        ("PASS_LOST", 18.11, 74.08, 18.94, 60.61, None),
+        ("CROSS_LOST", 114.86, 70.92, 110.70, 40.17, None),
+        ("CROSS_LOST", 105.88, 72.42, 111.53, 62.61, None),
     ],
     "Vancouver Whitecaps (05-15)": [
-        ("PASS WON", 106.55, 57.45, 118.02, 57.12, None),
-        ("PASS WON", 85.60, 71.92, 84.27, 56.62, None),
-        ("PASS WON", 97.57, 65.10, 88.09, 54.13, None),
-        ("PASS WON", 77.62, 63.61, 90.59, 50.14, None),
-        ("PASS WON", 66.32, 56.62, 79.95, 46.15, None),
-        ("PASS WON", 83.61, 74.58, 103.22, 67.76, None),
-        ("PASS WON", 74.96, 59.28, 95.57, 75.57, None),
-        ("PASS WON", 84.94, 60.45, 70.47, 53.80, None),
-        ("PASS WON", 70.81, 66.76, 64.65, 51.80, None),
-        ("PASS WON", 58.17, 64.27, 59.67, 55.96, None),
-        ("PASS WON", 56.01, 68.76, 58.17, 55.46, None),
-        ("PASS WON", 56.34, 70.59, 54.51, 55.79, None),
-        ("PASS WON", 55.35, 73.91, 81.94, 64.27, None),
-        ("PASS WON", 47.70, 63.61, 83.77, 78.23, None),
-        ("PASS WON", 48.70, 68.59, 49.03, 54.13, None),
-        ("PASS WON", 27.25, 69.92, 46.70, 78.07, None),
-        ("PASS WON", 36.39, 69.09, 59.34, 61.28, None),
-        ("PASS WON", 42.71, 69.76, 17.28, 68.26, None),
-        ("PASS WON", 25.26, 67.26, 32.24, 53.63, None),
-        ("PASS LOST", 38.89, 63.27, 48.03, 62.61, None),
-        ("PASS LOST", 51.85, 66.26, 101.39, 66.93, None),
-        ("PASS LOST", 62.99, 63.61, 90.59, 78.90, None),
+        ("PASS_WON", 106.55, 57.45, 118.02, 57.12, None),
+        ("PASS_WON", 85.60, 71.92, 84.27, 56.62, None),
+        ("PASS_WON", 97.57, 65.10, 88.09, 54.13, None),
+        ("PASS_WON", 77.62, 63.61, 90.59, 50.14, None),
+        ("PASS_WON", 66.32, 56.62, 79.95, 46.15, None),
+        ("PASS_WON", 83.61, 74.58, 103.22, 67.76, None),
+        ("PASS_WON", 74.96, 59.28, 95.57, 75.57, None),
+        ("PASS_WON", 84.94, 60.45, 70.47, 53.80, None),
+        ("PASS_WON", 70.81, 66.76, 64.65, 51.80, None),
+        ("PASS_WON", 58.17, 64.27, 59.67, 55.96, None),
+        ("PASS_WON", 56.01, 68.76, 58.17, 55.46, None),
+        ("PASS_WON", 56.34, 70.59, 54.51, 55.79, None),
+        ("PASS_WON", 55.35, 73.91, 81.94, 64.27, None),
+        ("PASS_WON", 47.70, 63.61, 83.77, 78.23, None),
+        ("PASS_WON", 48.70, 68.59, 49.03, 54.13, None),
+        ("PASS_WON", 27.25, 69.92, 46.70, 78.07, None),
+        ("PASS_WON", 36.39, 69.09, 59.34, 61.28, None),
+        ("PASS_WON", 42.71, 69.76, 17.28, 68.26, None),
+        ("PASS_WON", 25.26, 67.26, 32.24, 53.63, None),
+        ("PASS_LOST", 38.89, 63.27, 48.03, 62.61, None),
+        ("PASS_LOST", 51.85, 66.26, 101.39, 66.93, None),
+        ("PASS_LOST", 62.99, 63.61, 90.59, 78.90, None),
     ],
     "LAFC (05-20)": [
-        ("PASS WON", 97.40, 56.29, 117.68, 56.12, None),
-        ("PASS WON", 99.40, 75.91, 93.58, 66.76, None),
-        ("PASS WON", 82.44, 61.78, 74.13, 55.29, None),
-        ("PASS WON", 75.79, 59.28, 87.76, 72.08, None),
-        ("PASS WON", 63.66, 68.76, 72.63, 55.63, None),
-        ("PASS WON", 46.37, 57.29, 66.82, 77.57, None),
-        ("PASS WON", 44.54, 56.46, 38.06, 54.63, None),
-        ("PASS WON", 27.25, 60.45, 34.57, 49.31, None),
-        ("PASS WON", 37.23, 67.10, 22.43, 62.61, None),
-        ("PASS WON", 33.40, 70.75, 24.92, 61.28, None),
-        ("PASS WON", 25.76, 71.42, 18.28, 66.76, None),
-        ("PASS WON", 20.27, 76.24, 35.90, 73.91, None),
-        ("PASS WON", 13.12, 53.63, 11.29, 24.21, None),
-        ("PASS LOST", 112.20, 63.27, 103.89, 56.29, None),
-        ("PASS LOST", 99.90, 61.94, 107.54, 36.68, None),
+        ("PASS_WON", 97.40, 56.29, 117.68, 56.12, None),
+        ("PASS_WON", 99.40, 75.91, 93.58, 66.76, None),
+        ("PASS_WON", 82.44, 61.78, 74.13, 55.29, None),
+        ("PASS_WON", 75.79, 59.28, 87.76, 72.08, None),
+        ("PASS_WON", 63.66, 68.76, 72.63, 55.63, None),
+        ("PASS_WON", 46.37, 57.29, 66.82, 77.57, None),
+        ("PASS_WON", 44.54, 56.46, 38.06, 54.63, None),
+        ("PASS_WON", 27.25, 60.45, 34.57, 49.31, None),
+        ("PASS_WON", 37.23, 67.10, 22.43, 62.61, None),
+        ("PASS_WON", 33.40, 70.75, 24.92, 61.28, None),
+        ("PASS_WON", 25.76, 71.42, 18.28, 66.76, None),
+        ("PASS_WON", 20.27, 76.24, 35.90, 73.91, None),
+        ("PASS_WON", 13.12, 53.63, 11.29, 24.21, None),
+        ("PASS_LOST", 112.20, 63.27, 103.89, 56.29, None),
+        ("CROSS_LOST", 99.90, 61.94, 107.54, 36.68, None),
     ],
 }
 
-# DEFENSIVE ACTIONS — only the 3 new matches, offensive duels excluded
+# DEFENSIVE ACTIONS — only the 3 new matches, only defensive duels + interceptions
 DEFENSIVE_MATCHES_DATA = {
     "Real Salt Lake (05-10)": [
         ("DUEL_WON", 109.70, 68.92),
@@ -282,9 +284,10 @@ for match_name, events in combined_matches_data.items():
     dfm = pd.DataFrame(events, columns=["type", "x_start", "y_start", "x_end", "y_end", "video"])
     dfm["match"] = match_name
     dfm["number"] = np.arange(1, len(dfm) + 1)
-    dfm["is_won"] = dfm["type"].str.contains("WON", case=False)
+    dfm["is_won"] = dfm["type"].str.contains("WON", case=False) | (dfm["type"] == "CROSS_WON")
+    dfm["is_cross"] = dfm["type"].str.contains("CROSS", case=False)
     dfm["progressive"] = dfm.apply(
-        lambda r: r["is_won"] and is_progressive_pass(r["x_start"], r["y_start"], r["x_end"], r["y_end"]),
+        lambda r: r["is_won"] and not r["is_cross"] and is_progressive_pass(r["x_start"], r["y_start"], r["x_end"], r["y_end"]),
         axis=1
     )
     dfm["direction"] = dfm.apply(
@@ -395,13 +398,13 @@ def compute_stats(df: pd.DataFrame, match_name: str) -> dict:
         "total_passes": total,
         "successful_passes": successful,
         "unsuccessful_passes": unsuccessful,
-        "accuracy_pct": round(accuracy, 2),
+        "accuracy_pct": round(accuracy, 1),
         "progressive_attempted": progressive_attempted,
         "progressive_successful": progressive_total,
-        "progressive_accuracy_pct": round(progressive_accuracy, 2),
+        "progressive_accuracy_pct": round(progressive_accuracy, 1),
         "to_final_third_total": to_final_third_total,
         "to_final_third_success": to_final_third_success,
-        "to_final_third_accuracy_pct": round(to_final_third_accuracy, 2),
+        "to_final_third_accuracy_pct": round(to_final_third_accuracy, 1),
         "fwd": fwd,
         "fwd_pct": round(fwd / total * 100.0, 1),
         "bwd": bwd,
@@ -413,14 +416,14 @@ def compute_stats(df: pd.DataFrame, match_name: str) -> dict:
         "high_xt_pct": round(high_xt / total * 100.0, 1),
         "sum_dxt": round(sum_dxt, 3),
         "total_p90": round(total * p90_factor, 1),
-        "prog_p90": round(progressive_total * p90_factor, 2),
-        "f3_p90": round(to_final_third_success * p90_factor, 2),
+        "prog_p90": round(progressive_total * p90_factor, 1),
+        "f3_p90": round(to_final_third_success * p90_factor, 1),
         "xt_p90": round(sum_dxt * p90_factor, 3),
         "neg_xt_p90": round(neg_xt * p90_factor, 3),
         "minutes": mins,
         "long_acc_pct": round(long_acc_pct, 1),
-        "high_xt_p90": round(high_xt * p90_factor, 2),
-        "dz_p90": round(dz_passes * p90_factor, 2),
+        "high_xt_p90": round(high_xt * p90_factor, 1),
+        "dz_p90": round(dz_passes * p90_factor, 1),
     }
 
 def compute_match_scores(dfs_dict, defensive_dfs_dict=None):
@@ -510,7 +513,7 @@ def compute_match_scores(dfs_dict, defensive_dfs_dict=None):
                     int_bonus_val = min(ip / 10.0, 1.0) * (0.5 + int_xt_avg * 2) * 3
                     bonus = duel_bonus_val + int_bonus_val
                     break
-            def_bonus_list.append(round(bonus, 2))
+            def_bonus_list.append(round(bonus, 1))
             duels_p90_list.append(dp)
             duels_won_pct_list.append(round(dwp, 1))
             interceptions_p90_list.append(ip)
@@ -631,7 +634,7 @@ def section_card(title, border_color, items):
     bg = _hex_to_rgba(border_color, 0.55)
     bd = _hex_to_rgba(border_color, 0.30)
     html = f'<div style="background:linear-gradient(135deg,{bg},#1a1a2e);border:1px solid {bd};border-radius:10px;padding:14px 14px 6px 14px;margin-bottom:10px">'
-    html += f'<div style="color:#e0e0f0;font-size:13px;font-weight:700;padding-bottom:6px;border-bottom:1px solid {bd};margin-bottom:8px">{title}</div>'
+    html += f'<div style="color:#e0e0f0;font-size:15px;font-weight:700;padding-bottom:6px;border-bottom:1px solid {bd};margin-bottom:8px">{title}</div>'
     html += f'<div style="display:flex;flex-direction:column;gap:2px">'
     for idx, item in enumerate(items):
         label = item[0]
@@ -645,13 +648,13 @@ def section_card(title, border_color, items):
         if tooltip:
             label_html = f'{label}'
             label_html += f'<span style="cursor:help;margin-left:4px;font-size:8px;color:#8888aa;border:1px solid #8888aa;border-radius:50%;padding:0 5px">?</span>'
-            html += f'<span style="color:#ffffff;font-size:11px" title="{tooltip}">{label_html}</span>'
+            html += f'<span style="color:#ffffff;font-size:14px" title="{tooltip}">{label_html}</span>'
         else:
-            html += f'<span style="color:#ffffff;font-size:11px">{label}</span>'
-        html += f'<span style="color:#ffffff;font-size:14px;font-weight:700">{value}</span>'
+            html += f'<span style="color:#ffffff;font-size:14px">{label}</span>'
+        html += f'<span style="color:#ffffff;font-size:18px;font-weight:700">{value}</span>'
         html += f'</div>'
         if sub:
-            html += f'<div style="color:#8888bb;font-size:9px;padding-top:1px">{sub}</div>'
+            html += f'<div style="color:#8888bb;font-size:10px;padding-top:1px">{sub}</div>'
         html += '</div>'
     html += '</div></div>'
     st.markdown(html, unsafe_allow_html=True)
@@ -660,7 +663,7 @@ def cmp_section_card(title, border_color, items):
     bg = _hex_to_rgba(border_color, 0.55)
     bd = _hex_to_rgba(border_color, 0.30)
     html = f'<div style="background:linear-gradient(135deg,{bg},#1a1a2e);border:1px solid {bd};border-radius:10px;padding:14px 14px 6px 14px;margin-bottom:10px">'
-    html += f'<div style="color:#e0e0f0;font-size:13px;font-weight:700;padding-bottom:6px;border-bottom:1px solid {bd};margin-bottom:8px">{title}</div>'
+    html += f'<div style="color:#e0e0f0;font-size:15px;font-weight:700;padding-bottom:6px;border-bottom:1px solid {bd};margin-bottom:8px">{title}</div>'
     html += f'<div style="display:flex;flex-direction:column;gap:2px">'
     for idx, item in enumerate(items):
         label = item[0]
@@ -677,12 +680,12 @@ def cmp_section_card(title, border_color, items):
         if tooltip:
             label_html = f'{label}'
             label_html += f'<span style="cursor:help;margin-left:4px;font-size:8px;color:#8888aa;border:1px solid #8888aa;border-radius:50%;padding:0 5px">?</span>'
-            html += f'<span style="color:#ffffff;font-size:11px" title="{tooltip}">{label_html}</span>'
+            html += f'<span style="color:#ffffff;font-size:14px" title="{tooltip}">{label_html}</span>'
         else:
-            html += f'<span style="color:#ffffff;font-size:11px">{label}</span>'
-        html += f'<span style="color:#ffffff;font-size:14px;font-weight:700">{disp_game}{arrow}</span>'
+            html += f'<span style="color:#ffffff;font-size:14px">{label}</span>'
+        html += f'<span style="color:#ffffff;font-size:18px;font-weight:700">{disp_game}{arrow}</span>'
         html += f'</div>'
-        html += f'<div style="color:#8888bb;font-size:9px;padding-top:1px">AVG: {disp_avg}</div>'
+        html += f'<div style="color:#8888bb;font-size:10px;padding-top:1px">AVG: {disp_avg}</div>'
         html += '</div>'
     html += '</div></div>'
     st.markdown(html, unsafe_allow_html=True)
@@ -718,27 +721,39 @@ def _save_fig(fig):
 
 def draw_pass_map(df):
     fig, ax, pitch = _base_pitch()
+    has_crosses = "is_cross" in df.columns and df["is_cross"].any()
     for _, row in df.iterrows():
-        is_lost = not row["is_won"]
-        is_prog = bool(row["progressive"])
-        if is_lost:
-            color, alpha = COLOR_FAIL, 0.72
-        elif is_prog:
-            color, alpha = COLOR_PROGRESSIVE, 0.88
+        is_cross = bool(row.get("is_cross", False))
+        if is_cross:
+            if row["is_won"]:
+                color, alpha = COLOR_CROSS_WON, 0.90
+            else:
+                color, alpha = COLOR_CROSS_LOST, 0.85
         else:
-            color, alpha = COLOR_SUCCESS, ALPHA_SUCCESS
+            is_lost = not row["is_won"]
+            is_prog = bool(row["progressive"])
+            if is_lost:
+                color, alpha = COLOR_FAIL, 0.72
+            elif is_prog:
+                color, alpha = COLOR_PROGRESSIVE, 0.88
+            else:
+                color, alpha = COLOR_SUCCESS, ALPHA_SUCCESS
         pitch.arrows(row["x_start"], row["y_start"], row["x_end"], row["y_end"],
                      color=color, width=1.3, headwidth=2.0, headlength=2.0,
                      ax=ax, zorder=3, alpha=alpha)
         pitch.scatter(row["x_start"], row["y_start"], s=32, marker="o",
                       color=color, edgecolors="white", linewidths=0.6,
                       ax=ax, zorder=6, alpha=alpha)
+    leg_handles = [
+        Line2D([0], [0], color=COLOR_SUCCESS, lw=2.0, label="Completed", alpha=0.65),
+        Line2D([0], [0], color=COLOR_PROGRESSIVE, lw=2.0, label="Progressive", alpha=0.90),
+        Line2D([0], [0], color=COLOR_FAIL, lw=2.0, label="Incomplete", alpha=0.90),
+    ]
+    if has_crosses:
+        leg_handles.append(Line2D([0], [0], color=COLOR_CROSS_WON, lw=2.0, label="Cross Won", alpha=0.90))
+        leg_handles.append(Line2D([0], [0], color=COLOR_CROSS_LOST, lw=2.0, label="Cross Lost", alpha=0.85))
     leg = ax.legend(
-        handles=[
-            Line2D([0], [0], color=COLOR_SUCCESS, lw=2.0, label="Completed", alpha=0.65),
-            Line2D([0], [0], color=COLOR_PROGRESSIVE, lw=2.0, label="Progressive", alpha=0.90),
-            Line2D([0], [0], color=COLOR_FAIL, lw=2.0, label="Incomplete", alpha=0.90),
-        ],
+        handles=leg_handles,
         loc="upper left", bbox_to_anchor=(0.01, 0.99),
         frameon=True, facecolor="#1a1a2e", edgecolor="#444466",
         fontsize=6.5, labelspacing=0.35, borderpad=0.4
@@ -808,9 +823,9 @@ def _draw_comet_arrow(ax, x0, y0, x1, y1, color):
 
 def draw_top_xt_map(df, top_n=5):
     fig, ax, pitch = _base_pitch()
-    top_passes = (df[(df["is_won"]) & (df["delta_xt_adj"] > 0)]
-                  .sort_values("delta_xt_adj", ascending=False).head(top_n).copy().reset_index(drop=True))
-    if not top_passes.empty:
+    eligible = df[(df["is_won"]) & (df["delta_xt_adj"] > 0)]
+    if not eligible.empty:
+        top_passes = eligible.sort_values("delta_xt_adj", ascending=False).head(top_n).copy().reset_index(drop=True)
         for _, row in top_passes.iterrows():
             val = float(row["delta_xt_adj"])
             color = CMAP_TOP10(NORM_TOP10(np.clip(val, 0.05, 0.40)))
@@ -1014,7 +1029,7 @@ with tab_graf:
             section_card("⚡ Impact", C_AMBER_PASTEL, [
                 ("% Positive Impact", f"{avg_pos_pct:.1f}%", f"Total: {total_pos_all}",
                  "Passes that generated a positive impact based on where they ended on the field"),
-                ("Pass Impact Value", f"{avg_xt_p90:.3f}", f"Total: {total_xt_all:.3f}",
+                ("Pass Impact Value", f"{avg_xt_p90:.1f}", f"Total: {total_xt_all:.1f}",
                  "Calculation used to evaluate the offensive value added by a pass."),
             ])
 
@@ -1069,7 +1084,7 @@ with tab_dash:
         with col_f2:
             pass_filter = st.radio(
                 "Pass Type",
-                ["All", "Successful", "Unsuccessful", "Progressive", "Final Third"],
+                ["All", "Successful", "Unsuccessful", "Progressive", "Final Third", "Crosses"],
                 index=0, horizontal=True, key="pass_filter"
             )
 
@@ -1089,6 +1104,8 @@ with tab_dash:
                 return df[df["progressive"]].copy()
             if pass_filter == "Final Third":
                 return df[(df["x_start"] < FINAL_THIRD_LINE_X) & (df["x_end"] >= FINAL_THIRD_LINE_X)].copy()
+            if pass_filter == "Crosses":
+                return df[df["is_cross"]].copy()
             return df.copy()
 
         df_game = apply_filter(df_game_filtered)
@@ -1112,8 +1129,7 @@ with tab_dash:
 
         img_pm_game, fig_pm_game = draw_pass_map(df_game); plt.close(fig_pm_game)
         img_ht_game, fig_ht_game = draw_corridor_heatmap(df_game); plt.close(fig_ht_game)
-        top_n_xt = 10 if force_avg else 5
-        img_xt_game, fig_xt_game = draw_top_xt_map(df_game, top_n=top_n_xt); plt.close(fig_xt_game)
+        img_xt_game, fig_xt_game = draw_top_xt_map(df_game, top_n=5); plt.close(fig_xt_game)
 
         col_m1, col_m2, col_m3 = st.columns(3)
         with col_m1:
@@ -1123,8 +1139,7 @@ with tab_dash:
             st.markdown('<div style="color:#a0a0b5;font-size:11px;font-weight:600;padding-bottom:4px">Zone Heatmap</div>', unsafe_allow_html=True)
             st.image(img_ht_game, use_container_width=True)
         with col_m3:
-            label = "Top 10" if force_avg else "Top 5"
-            st.markdown(f'<div style="color:#a0a0b5;font-size:11px;font-weight:600;padding-bottom:4px">{label} Pass Impact</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#a0a0b5;font-size:11px;font-weight:600;padding-bottom:4px">Top 5 Pass Impact</div>', unsafe_allow_html=True)
             st.image(img_xt_game, use_container_width=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
@@ -1133,18 +1148,18 @@ with tab_dash:
         if force_avg:
             with col_s1:
                 section_card("📋 Pass Overview", C_BLUE_PASTEL, [
-                    ("Total Passes", f"{s_game['total_p90']:.2f}"),
-                    ("Successful %", f"{s_game['accuracy_pct']:.2f}%"),
+                    ("Total Passes", f"{s_game['total_p90']:.1f}"),
+                    ("Successful %", f"{s_game['accuracy_pct']:.1f}%"),
                 ])
             with col_s2:
                 section_card("📊 Advanced", C_GREEN_PASTEL, [
-                    ("Progressive", f"{s_game['prog_p90']:.2f}"),
-                    ("Final Third", f"{s_game['f3_p90']:.2f}"),
+                    ("Progressive", f"{s_game['prog_p90']:.1f}"),
+                    ("Final Third", f"{s_game['f3_p90']:.1f}"),
                 ])
             with col_s3:
                 section_card("⚡ Impact", C_AMBER_PASTEL, [
-                    ("% Positive Impact", f"{s_game['pos_pct']:.2f}%"),
-                    ("Pass Impact Value", f"{s_game['xt_p90']:.3f}"),
+                    ("% Positive Impact", f"{s_game['pos_pct']:.1f}%"),
+                    ("Pass Impact Value", f"{s_game['xt_p90']:.1f}"),
                 ])
         else:
             with col_s1:
@@ -1164,7 +1179,7 @@ with tab_dash:
                      f"{s_game['pos_pct']:.1f}%", f"{s_avg['pos_pct']:.1f}%",
                      "Passes that generated a positive impact based on where they ended on the field"),
                     ("Pass Impact Value", s_game["xt_p90"], s_avg["xt_p90"],
-                     f"{s_game['xt_p90']:.3f}", f"{s_avg['xt_p90']:.3f}",
+                     f"{s_game['xt_p90']:.1f}", f"{s_avg['xt_p90']:.1f}",
                      "Calculation used to define the value of pass impact based on expected threat (xT) progression"),
                 ])
 
@@ -1230,18 +1245,18 @@ with tab_dash:
         if force_avg_def:
             with col_ds1:
                 section_card("🛡️ General", C_BLUE_PASTEL, [
-                    ("Defensive Actions", f"{d_game['total_actions_p90']:.2f}"),
-                    ("Actions in Opp. Field", f"{d_game['actions_attacking_p90']:.2f}"),
+                    ("Defensive Actions", f"{d_game['total_actions_p90']:.1f}"),
+                    ("Actions in Opp. Field", f"{d_game['actions_attacking_p90']:.1f}"),
                 ])
             with col_ds2:
                 section_card("⚔️ Duels", C_GREEN_PASTEL, [
-                    ("Defensive Duels", f"{d_game['duels_p90']:.2f}"),
-                    ("% Duels Won", f"{d_game['duels_won_pct']:.2f}%"),
+                    ("Defensive Duels", f"{d_game['duels_p90']:.1f}"),
+                    ("% Duels Won", f"{d_game['duels_won_pct']:.1f}%"),
                 ])
             with col_ds3:
                 section_card("👁️ Interceptions", C_AMBER_PASTEL, [
-                    ("Interceptions", f"{d_game['interceptions_p90']:.2f}"),
-                    ("Interceptions in Opp Field", f"{d_game['interceptions_attacking_p90']:.2f}"),
+                    ("Interceptions", f"{d_game['interceptions_p90']:.1f}"),
+                    ("Interceptions in Opp Field", f"{d_game['interceptions_attacking_p90']:.1f}"),
                 ])
         else:
             with col_ds1:
